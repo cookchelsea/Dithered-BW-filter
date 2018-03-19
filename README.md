@@ -1,0 +1,1 @@
+# Dithered-BW-filter
