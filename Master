@@ -1,0 +1,42 @@
+import image
+
+img = image.Image("luther.jpg")
+win = image.ImageWin(img.getWidth(), img.getHeight())
+img.draw(win)
+img.setDelay(1,15)   # setDelay(0) turns off animation
+
+for col in range(img.getWidth()):
+    for row in range(img.getHeight()):
+        if col > 0 and row > 0 and col < img.getWidth() and row < img.getHeight():
+            p = img.getPixel(col, row)
+            p1 = img.getPixel(col + 1, row)
+            p2 = img.getPixel(col - 1, row)
+            p3 = img.getPixel(col, row + 1)
+            p4 = img.getPixel(col, row - 1)
+            pixelList = [p, p1, p2, p3, p4]
+            avg = 0
+            for pixel in pixelList:
+                avg = avg + ((pixel.getRed() + pixel.getGreen() + pixel.getBlue()) /3)
+            avg = avg / 5
+            if avg > 122:
+                avg = 255
+            else:
+                avg = 0
+            newred = avg
+            newgreen = avg
+            newblue = avg
+            newpixel = image.Pixel(newred, newgreen, newblue)
+        else:    
+            AveragePixels = (p.getRed()+ p.getGreen()+ p.getBlue()) / 3
+            if AveragePixels > 122:
+                AveragePixels = 255
+            else: AveragePixels = 0
+            newred = AveragePixels
+            newgreen = AveragePixels
+            newblue = AveragePixels
+            newpixel = image.Pixel(newred, newgreen, newblue)
+
+        img.setPixel(col, row, newpixel)
+
+img.draw(win)
+win.exitonclick()
